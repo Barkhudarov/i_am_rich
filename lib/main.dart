@@ -57,7 +57,7 @@ class HomeMenu extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const DiamPngImage()),
                   );
                 },
-                icon: const Icon(Icons.image, color: Colors.black),
+                icon: const Icon(Icons.image, color: Colors.blue),
                 label: const Text(
                   "Показать PNG-версию",
                   style: TextStyle(color: Colors.black),
@@ -78,7 +78,7 @@ class HomeMenu extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const DiamPngRiv()),
                   );
                 },
-                icon: const Icon(Icons.play_circle_fill, color: Colors.black),
+                icon: const Icon(Icons.play_circle_fill, color: Colors.blue),
                 label: const Text(
                   "Показать Rive-анимацию",
                   style: TextStyle(color: Colors.black),
