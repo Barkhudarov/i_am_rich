@@ -103,16 +103,16 @@ class HomeMenu extends StatelessWidget {
   }
 }
 
-class TranslateLoc extends StatefulWidget {
-  const TranslateLoc({super.key});
+// class TranslateLoc extends StatefulWidget {
+//   const TranslateLoc({super.key});
 
-  @override
-  State<TranslateLoc> createState() => _TranslateLocState();
-}
+//   @override
+//   State<TranslateLoc> createState() => _TranslateLocState();
+// }
 
-class _TranslateLocState extends State<TranslateLoc> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
+// class _TranslateLocState extends State<TranslateLoc> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold();
+//   }
+// }
