@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeMenu(),
+      home: const HomeMenu(),
       // const DiamPngImage(),
       // const DiamPngRiv(),
     );
@@ -32,6 +32,10 @@ class HomeMenu extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.g_translate_outlined),
+        ),
         title: const Text(
           'KazDevLog',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
@@ -96,5 +100,19 @@ class HomeMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class TranslateLoc extends StatefulWidget {
+  const TranslateLoc({super.key});
+
+  @override
+  State<TranslateLoc> createState() => _TranslateLocState();
+}
+
+class _TranslateLocState extends State<TranslateLoc> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
   }
 }

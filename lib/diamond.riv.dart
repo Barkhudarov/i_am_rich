@@ -10,7 +10,7 @@ class DiamPngRiv extends StatefulWidget {
 
 class _DiamPngRivState extends State<DiamPngRiv> {
   void _onInit(Artboard artboard) {
-    var controller = SimpleAnimation('Diamond Rotate');
+    final controller = SimpleAnimation('Shar Shimmer');
     artboard.addController(controller);
   }
 
