@@ -1,31 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:i_am_rich/diamond.img.dart';
 import 'package:i_am_rich/diamond.riv.dart';
+import 'package:i_am_rich/generated/l10n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en');
+
+  void _toggleLanguage() {
+    setState(() {
+      _locale =
+          _locale.languageCode == 'en'
+              ? const Locale('ru')
+              : const Locale('en');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: _locale,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: 'KazDevLog',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeMenu(),
-      // const DiamPngImage(),
-      // const DiamPngRiv(),
+      home: HomeMenu(onToggleLanguage: _toggleLanguage),
     );
   }
 }
 
 class HomeMenu extends StatelessWidget {
-  const HomeMenu({super.key});
+  final VoidCallback onToggleLanguage;
+
+  const HomeMenu({super.key, required this.onToggleLanguage});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +59,7 @@ class HomeMenu extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: onToggleLanguage,
           icon: Icon(Icons.g_translate_outlined),
         ),
         title: const Text(
@@ -50,7 +76,7 @@ class HomeMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Добро пожаловать!',
+                S.of(context).welcome,
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 40),
@@ -62,8 +88,8 @@ class HomeMenu extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.image, color: Colors.blue),
-                label: const Text(
-                  "Показать PNG-версию",
+                label: Text(
+                  S.of(context).showPngVersion,
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -83,8 +109,8 @@ class HomeMenu extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.play_circle_fill, color: Colors.blue),
-                label: const Text(
-                  "Показать Rive-анимацию",
+                label: Text(
+                  S.of(context).showRiveAnimation,
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -102,17 +128,3 @@ class HomeMenu extends StatelessWidget {
     );
   }
 }
-
-// class TranslateLoc extends StatefulWidget {
-//   const TranslateLoc({super.key});
-
-//   @override
-//   State<TranslateLoc> createState() => _TranslateLocState();
-// }
-
-// class _TranslateLocState extends State<TranslateLoc> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold();
-//   }
-// }
