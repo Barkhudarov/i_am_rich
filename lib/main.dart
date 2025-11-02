@@ -3,6 +3,7 @@ import 'package:i_am_rich/diamond.img.dart';
 import 'package:i_am_rich/diamond.riv.dart';
 import 'package:i_am_rich/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,12 +19,38 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('en');
 
-  void _toggleLanguage() {
+  void _toggleLanguage(BuildContext context) async {
+    final newLocale =
+        _locale.languageCode == 'en' ? const Locale('ru') : const Locale('en');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language_code', newLocale.languageCode);
     setState(() {
-      _locale =
-          _locale.languageCode == 'en'
-              ? const Locale('ru')
-              : const Locale('en');
+      _locale = newLocale;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          newLocale.languageCode == 'ru'
+              ? 'Язык переключён на русский 🇷🇺'
+              : 'Language switched to English 🇺🇸',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocale();
+  }
+
+  void _loadLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final langCode = prefs.getString('language_code') ?? 'en';
+    setState(() {
+      _locale = Locale(langCode);
     });
   }
 
@@ -43,13 +70,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeMenu(onToggleLanguage: _toggleLanguage),
+      home: HomeMenu(onToggleLanguage: (context) => _toggleLanguage(context)),
     );
   }
 }
 
 class HomeMenu extends StatelessWidget {
-  final VoidCallback onToggleLanguage;
+  final Function(BuildContext) onToggleLanguage;
 
   const HomeMenu({super.key, required this.onToggleLanguage});
 
@@ -59,7 +86,7 @@ class HomeMenu extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: onToggleLanguage,
+          onPressed: () => onToggleLanguage(context),
           icon: Icon(Icons.g_translate_outlined),
         ),
         title: const Text(
